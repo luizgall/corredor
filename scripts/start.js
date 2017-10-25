@@ -9,14 +9,16 @@ var requestAnimFrame = (function(){
          };
 })();
 
+
+
 var player;
 function initPlayer(){
-    player = new GameObject("player",150, 50, 150, 200, "img/spritesheet.png");
+    player = new GameObject("player", "player",150, 50, 150, 200, "img/spritesheet.png");
     player.vx = 0;
     player.vy = 0;
     player.collider = new Collider(player.x+30, player.y+30, player.width-50, player.height-30);
-    player.grounded = true;
     player.state = "walk";
+    player.grounded="false";
     player.sheet = new SpriteSheet("img/spritesheet.png", 200,200);
     player.walk = new Animation(player.sheet, 4, 0, 13);
     player.jump = new Animation(player.sheet, 5, 14, 19);
@@ -25,7 +27,7 @@ function initPlayer(){
     player.walk.draw(100,100);
 }
 function ground(){
-    plat = new GameObject("ground", 0, 400 , 1000, 300, " ");
+    plat = new GameObject("ground", "ground", 0, 400 , 1000, 300, " ");
     plat.collider = new Collider(plat.x,plat.y,plat.width,plat.height);
     plat.grounded = true;
 
@@ -39,7 +41,6 @@ function check(){
                 return true;
             }
     }
-    
          return false;
 }
 
@@ -54,11 +55,13 @@ function startGame(){
 function update(){
     if(check()){
         console.log("collision");
-
     }
     physics.update();
     requestAnimFrame(update);
     background.draw();
+    player.collider.update(player.x+30, player.y+30);
+    player.collider.draw();
+    plat.collider.draw();
     if(player.state == "walk"){
         player.walk.update();
         player.walk.draw(player.x,player.y);

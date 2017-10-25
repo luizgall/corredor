@@ -1,7 +1,8 @@
 var allGameObjects = [];
 
-function GameObject(name, x,y, width, height, sheet){
+function GameObject(name, type, x,y, width, height, sheet){
     this.name = name;
+    this.type = type;
     this.x = x;
     this.y = y;
     this.vx  = 0;
