@@ -12,11 +12,11 @@ var requestAnimFrame = (function(){
 
 
 var player;
+
 function initPlayer(){
-    player = new GameObject("player", "player",150, 50, 150, 200, "img/spritesheet.png");
-    player.vx = 0;
-    player.vy = 10;
-    player.collider = new Collider(player.x+30, player.y+30, player.width-50, player.height-30);
+    player = new GameObject("player", "player",150, 200, 150, 200, "img/spritesheet.png");
+    console.log(player.position);
+    player.velocity = new Vector(0,1000);
     player.state = "jump";
     player.grounded="false";
     player.sheet = new SpriteSheet("img/spritesheet.png", 200,200);
@@ -28,21 +28,38 @@ function initPlayer(){
 }
 function ground(){
     plat = new GameObject("ground", "ground", 0, 500 , 1000, 300, " ");
-    plat.collider = new Collider(plat.x,plat.y,plat.width,plat.height);
     plat.grounded = true;
     plat.draw = function(){
-        ctx.fillRect(plat.x,plat.y,plat.width,plat.height);
+        ctx.fillRect(plat.position.x,plat.position.y,plat.width,plat.height);
     }
+    
+    obj = new GameObject("obj", "obj", canvas.width, 300, 100, 100, "");
+    obj.grounded = true;
+    obj.draw = function(){
+        ctx.fillRect(obj.position.x,obj.position.y,obj.width,obj.height);
+    }
+    obj.velocity = new Vector(-10,0);
 
 }
+
+function rangeIntersect(min0, max0, min1,max1){
+    return Math.max(min0,max0)>= Math.min(min1,max1) && Math.min(min0,max0)<=Math.max(min1,max1);
+}
+
+function collision(r0,r1){
+    return rangeIntersect(r0.position.x, r0.position.x+r0.width,r1.position.x, r1.position.x+r1.width) && rangeIntersect(r0.position.y, r0.position.y+r0.height, r1.position.y, r1.position.y+r1.height);
+}
+
 function check(){
-        if(player.bottom() > plat.top()){
+        if(collision(player, plat)){
                 player.grounded=true;
-                player.vy = 0;
-                player.y = plat.top()-player.height-1;
+                player.velocity.y = 0;
+                player.position.y = plat.top()-player.height-1;
                 return true;        
     }
-         return false;
+        if(collision(player,obj)){
+            console.log("Ai!");
+        }
 }
 
 function startGame(){
@@ -55,17 +72,16 @@ function startGame(){
 
 function update(){
     requestAnimFrame(update)
-    console.log(player.y);
     if(check()){
         console.log("collision");
     }
     physics.update();
     background.draw();
-    player.collider.update(player.x+30, player.y+30);
     plat.draw();
+    obj.draw();
     if(player.state == "walk"){
         player.walk.update();
-        player.walk.draw(player.x,player.y);
+        player.walk.draw(player.position.x,player.position.y);
     }
     
  if (player.state=="jump"){
@@ -74,7 +90,7 @@ function update(){
          player.state = "walk";
          player.jump.reset();
      }
-        player.jump.draw(player.x,player.y);
+        player.jump.draw(player.position.x,player.position.y);
     }
     
     if(player.state=="roll"){
@@ -82,7 +98,7 @@ function update(){
             player.state =  "walk";
             player.roll.reset();
         }
-        player.roll.draw(player.x,player.y);
+        player.roll.draw(player.position.x,player.position.y);
     }
 
 }

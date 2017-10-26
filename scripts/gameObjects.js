@@ -3,20 +3,19 @@ var allGameObjects = [];
 function GameObject(name, type, x,y, width, height, sheet){
     this.name = name;
     this.type = type;
-    this.x = x;
-    this.y = y;
-    this.vx  = 0;
-    this.vy = 0;
+    this.position = new Vector (x,y);
+    this.velocity = new Vector(0,0);
     this.width = width;
     this.height = height;
     this.left = function(){
-        return this.x;};
+        return this.position.x;};
     this.top = function(){
-        return this.y;};
+        return this.position.y;};
     this.right = function(){
-        return this.x + this.width;};
+        return this.position.x + this.width;};
     this.bottom = function(){
-        return this.y + this.height;}
+        return this.position.y + this.height;}
+    
     this.sheet = new SpriteSheet(sheet, width, height);
     this.state = "disabled";
     this.animations ={};

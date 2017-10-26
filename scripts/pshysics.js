@@ -1,15 +1,14 @@
 var physics = (function(){
 
-    var gravity = 10;
+    var gravity = new Vector(0,10);
     this.update = function(){
     for (var i=0; i<allGameObjects.length; i++){
         if(!allGameObjects[i].grounded){
-        allGameObjects[i].vy += gravity;}
+            allGameObjects[i].velocity = allGameObjects[i].velocity.add(gravity); 
+        }
+        allGameObjects[i].position = allGameObjects[i].position.add(allGameObjects[i].velocity);
 
-        allGameObjects[i].x += allGameObjects[i].vx;
-        allGameObjects[i].y += allGameObjects[i].vy;
-
-    }
+        }
     }
     
         this.checkCollision = function(){
