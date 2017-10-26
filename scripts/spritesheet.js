@@ -9,14 +9,14 @@ function SpriteSheet(path, frameWidth, frameHeight){
     this.image.src  = path;
 }
 
-function Animation(sheet, frameSpeed, startFrame, endFrame){
+function Animation(name, sheet, frameSpeed, startFrame, endFrame){
     var animationSequence =[];
     var currentFrame = 0;
     var cont = 0;
     for(var frameNumber = startFrame; frameNumber <= endFrame; frameNumber++){
         animationSequence.push(frameNumber);
     }
-    
+    this.name = name;
     this.reset = function(){
         currentFrame = 0;
         cont=0;
@@ -26,10 +26,10 @@ function Animation(sheet, frameSpeed, startFrame, endFrame){
             currentFrame = (currentFrame+1)%animationSequence.length;
         cont = (cont+1)%frameSpeed;
         if(currentFrame == animationSequence.length-1){
-            return true, animationSequence.length;
+            return true;
         }
+        return false;
     };
-    
     this.draw = function(x,y){
     var row = Math.floor(animationSequence[currentFrame] / sheet.framesPerRow);
     var col = Math.floor(animationSequence[currentFrame] % sheet.framesPerRow);
@@ -40,4 +40,49 @@ function Animation(sheet, frameSpeed, startFrame, endFrame){
       x, y,
       sheet.frameWidth, sheet.frameHeight);
 };
+}
+
+
+function Animator (obj){
+    this.dad = obj;
+    this.animations = [];
+    this.pause = false;
+    this.defaultAnimation = null;
+    this.finished = false;
+    this.state = "jump";
+    this.default = function(animation){
+        this.defaultAnimation = animation;
+    }
+
+    this.add = function(animation){
+        this.animations.push(animation);
+    }
+
+    this.getAnimation = function(){
+        var anim;
+        if(this.state == null){
+            this.state = this.defaultAnimation;
+        }
+        for (var i = 0; i< this.animations.length;i++){
+            if(this.animations[i].name == this.state){
+                anim = this.animations[i];
+            }
+        }
+        return anim;
+    }
+    this.play = function ()
+     {
+         animation = this.getAnimation();
+        if(!this.pause){
+            if(animation.update()){
+                this.finished = true;
+                this.state = this.defaultAnimation;
+            }
+        }
+        animation.draw(this.dad.position.x, this.dad.position.y);
+        if(this.finished){
+            animation.reset();
+            this.finished = false;
+        }
+    }
 }

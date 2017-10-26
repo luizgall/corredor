@@ -3,6 +3,7 @@ var allGameObjects = [];
 function GameObject(name, type, x,y, width, height, sheet){
     this.name = name;
     this.type = type;
+    this.display = true;
     this.position = new Vector (x,y);
     this.velocity = new Vector(0,0);
     this.width = width;
@@ -16,7 +17,7 @@ function GameObject(name, type, x,y, width, height, sheet){
     this.bottom = function(){
         return this.position.y + this.height;}
     
-    this.sheet = new SpriteSheet(sheet, width, height);
+    this.sheet = new SpriteSheet(sheet, this.width, this.height);
     this.state = "disabled";
     this.animations ={};
     allGameObjects.push(this);
