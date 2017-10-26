@@ -8,9 +8,7 @@ var physics = (function(){
 
         allGameObjects[i].x += allGameObjects[i].vx;
         allGameObjects[i].y += allGameObjects[i].vy;
-        if(allGameObjects[i].grounded){
-        allGameObjects[i].vy = 0;
-        } 
+
     }
     }
     
