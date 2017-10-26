@@ -8,6 +8,8 @@ function GameObject(name, type, x,y, width, height, sheet){
     this.velocity = new Vector(0,0);
     this.width = width;
     this.height = height;
+    this.speed = 0;
+    this.defaultState = null;
     this.left = function(){
         return this.position.x;};
     this.top = function(){

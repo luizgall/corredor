@@ -10,7 +10,7 @@ var requestAnimFrame = (function(){
 })();
 
 
-
+var level  = new Level();
 var player;
 
 function initPlayer(){
@@ -18,13 +18,17 @@ function initPlayer(){
     player.animator = new Animator(player);
     player.animator.default("walk");
     player.animator.add(new Animation("walk", player.sheet, 4, 0, 13));
-    player.animator.add(new Animation("jump", player.sheet, 5, 14, 19));
-    player.animator.add(new Animation("roll", player.sheet, 4, 20, 26));
+    player.animator.add(new Animation("jump", player.sheet, 7, 14, 19));
+    player.animator.add(new Animation("roll", player.sheet, 6, 20, 26));
     player.velocity = new Vector(0,0);
     player.state = "walk";
+    player.speed = 0.35;
+    player.defaultState = "walk";
     player.grounded="true";
     player.sheet = new SpriteSheet("img/spritesheet.png", 200,200);
     player.animator.play();
+    
+    
 }
 function ground(){
     plat = new GameObject("ground", "ground", 0, 500 , 1000, 300, " ");
@@ -40,9 +44,8 @@ function ground(){
     }
     obj.velocity = new Vector(-10,0);
 
+    level.create(600, 100); 
 }
-
-
 
 function startGame(){
     console.log("game started");

@@ -1,10 +1,10 @@
 var physics = (function(){
 
-    var gravity = new Vector(0,10);
+    var gravity = new Vector(0,20);
     this.update = function(){
     for (var i=0; i<allGameObjects.length; i++){
         if(!allGameObjects[i].grounded){
-            allGameObjects[i].velocity = allGameObjects[i].velocity.add(gravity); 
+            allGameObjects[i].velocity = allGameObjects[i].velocity.add(gravity).multiply(allGameObjects[i].speed); 
         }
         allGameObjects[i].position = allGameObjects[i].position.add(allGameObjects[i].velocity);
 
@@ -26,10 +26,29 @@ var physics = (function(){
             for (var j=0; j<allGameObjects.length; j++){
                 if(allGameObjects[i]!== allGameObjects[j]){
                     if(collision(allGameObjects[i], allGameObjects[j])){
-                        return true;
+                        return true, resolveCollision({ "col1" : allGameObjects[i],
+                               "col2" : allGameObjects[j]}) ;
                     }
                 }     
              }         
+        }
+    };
+    function resolveCollision(data){
+        if ((data.col1.type == "player")|| (data.col2.type =="player")){
+           if((data.col1.type == "ground")||(data.col2.type == "ground")){
+               if(!data.col1.grounded){
+                    data.col1.velocity.y = 0;
+                   data.col1.grounded = true;
+
+                data.col1.position.y = data.col2.position.y -1 - data.col1.height;
+               } else{
+                    data.col2.velocity.y = 0;
+                   data.col2.grounded = true;
+
+                 data.col2.position.y = data.col1.position.y -1 - data.col2.height;
+               }
+               console.log(player.grounded);
+           }
         }
     };
             

@@ -49,7 +49,7 @@ function Animator (obj){
     this.pause = false;
     this.defaultAnimation = null;
     this.finished = false;
-    this.state = "jump";
+    this.state = "walk";
     this.default = function(animation){
         this.defaultAnimation = animation;
     }
@@ -83,6 +83,7 @@ function Animator (obj){
         if(this.finished){
             animation.reset();
             this.finished = false;
+            this.dad.state = this.dad.defaultState; 
         }
     }
 }
