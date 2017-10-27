@@ -50,6 +50,7 @@ function Animator (obj){
     this.defaultAnimation = null;
     this.finished = false;
     this.state = "walk";
+    this.cycle = [];
     this.default = function(animation){
         this.defaultAnimation = animation;
     }
@@ -60,9 +61,7 @@ function Animator (obj){
 
     this.getAnimation = function(){
         var anim;
-        if(this.state == null){
-            this.state = this.defaultAnimation;
-        }
+        this.state = this.dad.state;
         for (var i = 0; i< this.animations.length;i++){
             if(this.animations[i].name == this.state){
                 anim = this.animations[i];
@@ -72,18 +71,20 @@ function Animator (obj){
     }
     this.play = function ()
      {
-         animation = this.getAnimation();
+        animation = this.getAnimation();
         if(!this.pause){
             if(animation.update()){
                 this.finished = true;
-                this.state = this.defaultAnimation;
             }
         }
         animation.draw(this.dad.position.x, this.dad.position.y);
+        if(animation.name == "walk"){
+            this.finished = false;
+            return;
+        }
         if(this.finished){
             animation.reset();
-            this.finished = false;
-            this.dad.state = this.dad.defaultState; 
+            return true;
         }
     }
 }

@@ -1,9 +1,10 @@
 
 var startJump;
 $(document).ready(function(){
-    
+    // jump = 250;
        $(document).on('keydown', function(e){
             if(((e.keyCode == "32")) &&(player.state == "walk")){
+                console.log("jump");
                 startJump = true;
                 player.grounded= false;
                 player.state = "jump";

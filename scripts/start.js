@@ -9,19 +9,18 @@ var requestAnimFrame = (function(){
          };
 })();
 
-
-var level  = new Level();
 var player;
 
 
 function initPlayer(){
-    player = new GameObject("player", "player",150, 200, 150, 192, "img/spritesheet.png");
+    player = new GameObject("player", "player",150, 300, 150, 192, "img/spritesheet.png");
     player.animator = new Animator(player);
     player.animator.default("walk");
     player.animator.add(new Animation("walk", player.sheet, 4, 0, 13));
     player.animator.add(new Animation("jump", player.sheet, 7, 14, 19));
     player.animator.add(new Animation("roll", player.sheet, 6, 20, 26));
-    player.velocity = new Vector(0,0);
+    player.animator.add(new Animation("fall", player.sheet, 4, 17, 17));
+    player.velocity = new Vector(0,-10);
     player.state = "walk";
     player.fixed = false;
     player.speed = 0.25;
@@ -40,9 +39,11 @@ function ground(){
     plat.grounded = true;
     plat.collider = new Collider(plat.position.x, plat.position.y, plat.width, plat.height);
     plat.draw = function(){
+        ctx.fillStyle = "black";
         ctx.fillRect(plat.position.x,plat.position.y,plat.width,plat.height);
     }
     plat.velocity = new Vector(-10,0);
+    arr.push(plat);
 }
 
 function startGame(){
@@ -50,11 +51,13 @@ function startGame(){
     initPlayer();
     ground();
     background.reset();
+    spawnPlatform();
     update();
+    
 }
 
 function update(){
-    console.log(player.collider.position.y);
+
     requestAnimFrame(update)
     if(physics.checkCollision()){
         console.log("collision");
@@ -63,10 +66,10 @@ function update(){
     background.draw();
     plat.draw();
     levelUpdate();
-    
     plat.collider.update(plat.position.x, plat.position.y);
-    player.collider.update(player.position.x+150, player.position.y+50);
-    player.collider.draw();
-    player.animator.play();
+    player.collider.update(player.position.x+50, player.position.y+50);
+    if((player.animator.play()) && (player.state=="jump")){
+        player.state = "fall";
+    }
 
 }
