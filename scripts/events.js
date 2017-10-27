@@ -1,13 +1,14 @@
 
-
+var startJump;
 $(document).ready(function(){
     
        $(document).on('keydown', function(e){
             if(((e.keyCode == "32")) &&(player.state == "walk")){
+                startJump = true;
                 player.grounded= false;
                 player.state = "jump";
                 player.animator.state = "jump";
-                player.velocity.y -=1000;
+                player.velocity.y -=700;
 
             }
        });

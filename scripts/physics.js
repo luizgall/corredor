@@ -1,3 +1,15 @@
+ function rangeIntersect(min0, max0, min1,max1){
+    return Math.max(min0,max0)>= Math.min(min1,max1) && Math.min(min0,max0)<=Math.max(min1,max1);
+}
+
+    function collision(r0,r1){
+            if((r0 == undefined)|| (r1 == undefined)){
+                console.log("undefined");
+                return;
+            }
+            return rangeIntersect(r0.position.x, r0.position.x+r0.width,r1.position.x, r1.position.x+r1.width) && rangeIntersect(r0.position.y, r0.position.y+r0.height, r1.position.y, r1.position.y+r1.height);
+        }
+
 var physics = (function(){
 
     var gravity = new Vector(0,30);
@@ -16,6 +28,7 @@ var physics = (function(){
 
     function collision(r0,r1){
             if((r0 == undefined)|| (r1 == undefined)){
+                console.log("undefined");
                 return;
             }
             return rangeIntersect(r0.position.x, r0.position.x+r0.width,r1.position.x, r1.position.x+r1.width) && rangeIntersect(r0.position.y, r0.position.y+r0.height, r1.position.y, r1.position.y+r1.height);
@@ -25,7 +38,7 @@ var physics = (function(){
         for (var i=0; i<allGameObjects.length; i++){
             for (var j=0; j<allGameObjects.length; j++){
                 if(allGameObjects[i]!== allGameObjects[j]){
-                    if(collision(allGameObjects[i], allGameObjects[j])){
+                    if(collision(allGameObjects[i].collider, allGameObjects[j].collider)){
                         return true, resolveCollision({ "col1" : allGameObjects[i],
                                "col2" : allGameObjects[j]}) ;
                     }
@@ -35,6 +48,7 @@ var physics = (function(){
         player.grounded= false;
     };
     function resolveCollision(data){
+        console.log(data);
         if(startJump){
             startJump = false;
             return;
@@ -82,13 +96,20 @@ var physics = (function(){
 })();
 
 function Collider(x, y, width, height){
-    this.x = x;
-    this.y = y;
+    this.position = new Vector(x,y);
     this.width = width;
     this.height = height;
+    this.left = function(){
+        return this.position.x;};
+    this.top = function(){
+        return this.position.y;};
+    this.right = function(){
+        return this.position.x + this.width;};
+    this.bottom = function(){
+        return this.position.y + this.height;}
     this.update= function(x,y){
-        this.x = x;
-        this.y = y;
+        this.position.x = x;
+        this.position.y = y;
     }
     this.draw = function(){
         ctx.rect(this.x,this.y,this.width,this.height);

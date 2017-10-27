@@ -13,6 +13,7 @@ var requestAnimFrame = (function(){
 var level  = new Level();
 var player;
 
+
 function initPlayer(){
     player = new GameObject("player", "player",150, 200, 150, 192, "img/spritesheet.png");
     player.animator = new Animator(player);
@@ -23,19 +24,21 @@ function initPlayer(){
     player.velocity = new Vector(0,0);
     player.state = "walk";
     player.fixed = false;
-    player.speed = 0.35;
+    player.speed = 0.25;
     player.defaultState = "walk";
-    player.grounded="false";
+    player.grounded=true;
     player.falling = "false";
     player.sheet = new SpriteSheet("img/spritesheet.png", 200,200);
+    player.collider = new Collider(player.position.x+150, player.position.y+50, player.width-100, player.height-50);
     player.animator.play();
 
     
     
 }
 function ground(){
-    plat = new GameObject("ground", "ground", 0, 500 , 20000000, 300, " ");
+    plat = new GameObject("ground", "ground", 0, 500 , 1000, 300, " ");
     plat.grounded = true;
+    plat.collider = new Collider(plat.position.x, plat.position.y, plat.width, plat.height);
     plat.draw = function(){
         ctx.fillRect(plat.position.x,plat.position.y,plat.width,plat.height);
     }
@@ -51,6 +54,7 @@ function startGame(){
 }
 
 function update(){
+    console.log(player.collider.position.y);
     requestAnimFrame(update)
     if(physics.checkCollision()){
         console.log("collision");
@@ -59,6 +63,10 @@ function update(){
     background.draw();
     plat.draw();
     levelUpdate();
+    
+    plat.collider.update(plat.position.x, plat.position.y);
+    player.collider.update(player.position.x+150, player.position.y+50);
+    player.collider.draw();
     player.animator.play();
 
 }
