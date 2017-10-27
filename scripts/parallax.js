@@ -33,13 +33,13 @@ var background =(function(){
         sky.speed=0.2;
         bg1.x=0;
         bg1.y=0;
-        bg1.speed=0.8;
+        bg1.speed=1.2;
         bg2.x=0;
         bg2.y=0;
-        bg2.speed=0.4;
+        bg2.speed=0.6;
         bg3.x=0;
         bg3.y=0;
-        bg3.speed=0.2;
+        bg3.speed=0.3;
         
     }
     
