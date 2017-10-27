@@ -7,7 +7,8 @@ var assets = (function(){
         "bg2":"img/bg2.png",
         "bg3":"img/bg3.png",
         "sky":"img/sky.png",
-        "spritesheet":"img/spritesheet.png"
+        "spritesheet":"img/spritesheet.png",
+        "plat":"img/plat.png"
     }
     var assetsDownloaded = 0;
     var imgsN = Object.keys(this.imgs).length;

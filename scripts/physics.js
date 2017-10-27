@@ -39,15 +39,16 @@ var physics = (function(){
                if(!data.col1.grounded){
                     data.col1.velocity.y = 0;
                    data.col1.grounded = true;
-
-                data.col1.position.y = data.col2.position.y -1 - data.col1.height;
+                   if(rangeIntersect(data.col1.position.x, data.col1.position.x+ data.col1.width, data.col2.position.x, data.col2.position.x + data.col2.width)){
+                               data.col1.position.y = data.col2.position.y -1 - data.col1.height;
+                   }
                } else{
                     data.col2.velocity.y = 0;
                    data.col2.grounded = true;
-
+                   if(rangeIntersect(data.col1.position.x, data.col1.position.x+ data.col1.width, data.col2.position.x, data.col2.position.x + data.col2.width)){
                  data.col2.position.y = data.col1.position.y -1 - data.col2.height;
+                   }
                }
-               console.log(player.grounded);
            }
         }
     };
