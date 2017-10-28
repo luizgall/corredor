@@ -13,11 +13,11 @@ var player;
 
 
 function initPlayer(){
-    player = new GameObject("player", "player",150, 300, 150, 192, "img/spritesheet.png");
+    player = new GameObject("player", "player",150, 150, 150, 192, "img/spritesheet.png");
     player.animator = new Animator(player);
     player.animator.default("walk");
     player.animator.add(new Animation("walk", player.sheet, 4, 0, 13));
-    player.animator.add(new Animation("jump", player.sheet, 7, 14, 19));
+    player.animator.add(new Animation("jump", player.sheet, 7, 14, 16));
     player.animator.add(new Animation("roll", player.sheet, 6, 20, 26));
     player.animator.add(new Animation("fall", player.sheet, 4, 17, 17));
     player.velocity = new Vector(0,-10);
@@ -28,14 +28,14 @@ function initPlayer(){
     player.grounded=true;
     player.falling = "false";
     player.sheet = new SpriteSheet("img/spritesheet.png", 200,200);
-    player.collider = new Collider(player.position.x+150, player.position.y+50, player.width-100, player.height-50);
+    player.collider = new Collider(player.position.x+150, player.position.y+50, player.width-70, player.height-50);
     player.animator.play();
 
     
     
 }
 function ground(){
-    plat = new GameObject("ground", "ground", 0, 500 , 1000, 300, " ");
+    plat = new GameObject("ground", "ground", 0, 350 , 1000, 300, " ");
     plat.grounded = true;
     plat.collider = new Collider(plat.position.x, plat.position.y, plat.width, plat.height);
     plat.draw = function(){
@@ -70,6 +70,7 @@ function update(){
     player.collider.update(player.position.x+50, player.position.y+50);
     if((player.animator.play()) && (player.state=="jump")){
         player.state = "fall";
+        startJump = false;
     }
 
 }

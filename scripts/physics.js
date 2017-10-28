@@ -12,8 +12,11 @@
 
 var physics = (function(){
 
-    var gravity = new Vector(0,30);
+    var gravity = new Vector(0,25);
     this.update = function(){
+        if((player.position.x > 150)&&(player.grounded)){
+            player.position.x -=3;
+        }
     for (var i=0; i<allGameObjects.length; i++){
         if(!allGameObjects[i].grounded){
             allGameObjects[i].velocity = allGameObjects[i].velocity.add(gravity).multiply(allGameObjects[i].speed); 
@@ -51,15 +54,12 @@ var physics = (function(){
     function resolveCollision(data){
 
         if(startJump){
-            startJump = false;
             return;
         }
         if ((data.col1.type == "player")|| (data.col2.type =="player")){
             //console.log(data.col1.name, data.col1.top(), data.col2.name, data.col2.top());
            if((data.col1.type == "ground")||(data.col2.type == "ground")){
                if(!data.col1.grounded){
-                console.log(data.col1.type, data.col1.collider.bottom(), data.col2.type, data.col2.top());
-                
                    if(rangeIntersect(data.col1.position.x, data.col1.position.x+ data.col1.width, data.col2.position.x, data.col2.position.x + data.col2.width)){
                        if((data.col1.type!= "ground")&&(data.col1.collider.bottom()-10<= data.col2.collider.top())){
                             data.col1.velocity.y = 0;
@@ -67,6 +67,10 @@ var physics = (function(){
                             data.col1.grounded = true;
                             data.col1.position.y = data.col2.collider.position.y - data.col1.height;
                             console.log("collision");
+                       }
+                       else if ((data.col1.type !="ground")&&(data.col1.collider.bottom()-10 >= data.col2.collider.top())) {
+                           console.log("almostcollision");
+                          data.col1.velocity.x = -100;
                        }
                         
                    }
@@ -79,24 +83,15 @@ var physics = (function(){
                           data.col2.position.y = data.col1.collider.position.y - data.col2.height;
                           console.log("collision");
                        }
+                       else if ((data.col2.type !="ground")&&(data.col2.collider.bottom()-10 >= data.col1.collider.top())) {
+                            console.log("almostcollision");
+                           player.velocity.x = -100;
+                       }
                    }
                }
            }
         }
     };
-            
-        function check(){
-            if(collision(player, plat)){
-                    player.grounded=true;
-                    player.velocity.y = 0;
-                    player.position.y = plat.top()-player.height-1;
-                    return true;        
-        }
-            if(collision(player,obj)){
-                console.log("Ai!");
-            }
-    }
-
     return{
         update:this.update,
         checkCollision:this.checkCollision
