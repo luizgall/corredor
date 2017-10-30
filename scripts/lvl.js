@@ -37,7 +37,7 @@ function levelUpdate(){
     console.log(score);
     length -= 10;
     if((length<=0)&&(!player.died)){
-        length = 800;
+        length = 500;
         spawnPlatform();
     }
     for(i=0;i<arr.length;i++){
