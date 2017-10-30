@@ -12,17 +12,19 @@ function random(max, min){
     return Math.floor((Math.random()*max)+min);
 }
 function spawnPlatform(){
+    score +=1;
     width = random(500, 200);
     lastY = arr[arr.length-1].position.y;
+    gap = random (300, 100);
     if(lastY <= 400){
 
         lastY += random (200, 0);
     }
     else{        
         lastY -= random(200, 0);
-  
     }
-    obj = new GameObject("obj", "ground", arr[arr.length-1].position.x+arr[arr.length-1].width+200, lastY, width, 1000, "");
+    var obj;
+    obj = new GameObject("obj"+arr.length, "ground", arr[arr.length-1].position.x+arr[arr.length-1].width+gap, lastY, width, 1000, "");
     obj.grounded = true;
     obj.collider = new Collider(obj.position.x, obj.position.y+200, obj.width, 2000);
     obj.velocity = new Vector(-10,0);
@@ -32,9 +34,10 @@ score = 0;
 arr = [];
 
 function levelUpdate(){
+    console.log(score);
     length -= 10;
-    if(length<=0){
-        length = 100;
+    if((length<=0)&&(!player.died)){
+        length = 800;
         spawnPlatform();
     }
     for(i=0;i<arr.length;i++){

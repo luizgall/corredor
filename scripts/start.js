@@ -27,6 +27,7 @@ function initPlayer(){
     player.defaultState = "walk";
     player.grounded=true;
     player.falling = "false";
+    player.died = false;
     player.sheet = new SpriteSheet("img/spritesheet.png", 200,200);
     player.collider = new Collider(player.position.x+150, player.position.y+50, player.width-70, player.height-50);
     player.animator.play();
@@ -71,6 +72,9 @@ function update(){
     if((player.animator.play()) && (player.state=="jump")){
         player.state = "fall";
         startJump = false;
+    }
+    if(player.position.y > 1000){
+        player.died = true;
     }
 
 }

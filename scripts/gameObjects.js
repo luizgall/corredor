@@ -6,6 +6,7 @@ function GameObject(name, type, x,y, width, height, sheet){
     this.display = true;
     this.position = new Vector (x,y);
     this.velocity = new Vector(0,0);
+    this.acceleration = new Vector (0,0);
     this.width = width;
     this.height = height;
     this.speed = 0;

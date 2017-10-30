@@ -16,13 +16,13 @@ $(document).ready(function(){
                 player.state = "jump";
                 player.animator.state = "jump";
                 if(upDown){
-                                    player.velocity.y -=900;
+                                    player.acceleration.y -=90;
                                                         player.velocity.x = 200;
 
                 }
                 else{
-                                    player.velocity.y -=600;
-                                    player.velocity.x = 100;
+                                    player.acceleration.y -=80;
+                                    player.acceleration.x = 5;
                 }
 
 
