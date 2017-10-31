@@ -4,12 +4,7 @@ var upDown;
 $(document).ready(function(){
     // jump = 250;
        $(document).on('keydown', function(e){
-           
-           if(e.keyCode=="38"){
-               upDown = true;
-           }
-           console.log(e.which);
-            if(((e.keyCode == "32")) &&(player.state == "walk")){
+            if(((e.keyCode == "32")) &&((player.state == "walk")||(player.state == "roll"))){
                 console.log("jump");
                 startJump = true;
                 player.grounded= false;
@@ -28,11 +23,11 @@ $(document).ready(function(){
 
             }
            
-       /* if(((e.keyCode == "40") || (e.keyCode=="40"))&&(player.state=="walk")){
+        if(((e.keyCode == "40") || (e.keyCode=="40"))){
             console.log("roll");
             player.state = "roll";
             player.animator.state ="roll";
-        }*/
+        }
           if(((e.keyCode == "40")) &&(player.state == "fall")){  
               console.log("oi");
           

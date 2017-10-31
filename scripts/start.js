@@ -17,8 +17,8 @@ function initPlayer(){
     player.animator = new Animator(player);
     player.animator.default("walk");
     player.animator.add(new Animation("walk", player.sheet, 4, 0, 13));
-    player.animator.add(new Animation("jump", player.sheet, 7, 14, 16));
-    player.animator.add(new Animation("roll", player.sheet, 6, 20, 26));
+    player.animator.add(new Animation("jump", player.sheet, 6, 14, 16));
+    player.animator.add(new Animation("roll", player.sheet, 4, 20, 26));
     player.animator.add(new Animation("fall", player.sheet, 4, 17, 17));
     player.velocity = new Vector(0,-10);
     player.state = "walk";
@@ -69,9 +69,13 @@ function update(){
     levelUpdate();
     plat.collider.update(plat.position.x, plat.position.y);
     player.collider.update(player.position.x+50, player.position.y+50);
-    if((player.animator.play()) && (player.state=="jump")){
+    player.animator.play();
+    if((player.animator.finished) && (player.state=="jump")){
         player.state = "fall";
         startJump = false;
+    }
+        if((player.animator.finished) && (player.state=="roll")){
+        player.state = "walk";
     }
     if(player.position.y > 1000){
         player.died = true;

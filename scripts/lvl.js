@@ -29,18 +29,26 @@ function spawnPlatform(){
     obj.collider = new Collider(obj.position.x, obj.position.y+200, obj.width, 2000);
     obj.velocity = new Vector(-10,0);
     arr.push(obj);
+    x = random (arr[arr.length-1].width - 200, arr[arr.length-1].position.x+gap);
+    y = arr[arr.length-1].position.y - 10;
+    taculos = new GameObject("obssssss", "ground", x, y, 50, -200, ""); 
+    taculos.collider = new Collider(taculos.position.x, taculos.position.y, taculos.width, taculos.height);
+    taculos.velocity = new Vector(-10,0);
+    taculos.grounded = true;
+    obs.push(taculos);
 }
 score = 0;
 arr = [];
+obs = [];
 
 function levelUpdate(){
-    console.log(score);
     length -= 10;
     if((length<=0)&&(!player.died)){
         length = 500;
         spawnPlatform();
     }
     for(i=0;i<arr.length;i++){
+        player.collider.draw();
         if(arr[i]){
             arr[i].collider.update(arr[i].position.x, arr[i].position.y);
                 arr[i].draw();
@@ -55,7 +63,18 @@ function levelUpdate(){
                      delete arr[i];
         }
         }
-
-   
+    }
+        for(i=0;i<obs.length;i++){
+        if(obs[i]){
+            obs[i].collider.update(obs[i].position.x, obs[i].position.y);
+                ctx.beginPath();
+                ctx.fillStyle = "black";
+                   ctx.fillRect(obs[i].collider.position.x, obs[i].collider.position.y , obs[i].width , obs[i].height);
+                    ctx.stroke();
+                
+                 if (obs[i].position.x <= -2000){
+                     delete arr[i];
+        }
+        }
     }
 }

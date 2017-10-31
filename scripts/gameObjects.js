@@ -24,7 +24,8 @@ function GameObject(name, type, x,y, width, height, sheet){
     
     this.sheet = new SpriteSheet(sheet, this.width, this.height);
     this.draw = function(){
-        ctx.drawImage(this.sheet.image, this.position.x, this.position.y);
+        //ctx.drawImage(this.sheet.image, this.position.x, this.position.y);
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
     }
     this.state = "disabled";
     this.animations ={};

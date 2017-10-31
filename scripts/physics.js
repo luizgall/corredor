@@ -62,28 +62,33 @@ var physics = (function(){
             return;
         }
         if ((data.col1.type == "player")|| (data.col2.type =="player")){
-            //console.log(data.col1.name, data.col1.top(), data.col2.name, data.col2.top());
            if((data.col1.type == "ground")||(data.col2.type == "ground")){
-               if(!data.col1.grounded){
+               if(data.col1.name == "player"){
                    if(rangeIntersect(data.col1.position.x, data.col1.position.x+ data.col1.width, data.col2.position.x, data.col2.position.x + data.col2.width)){
                        if((data.col1.type!= "ground")&&(data.col1.collider.bottom()-50  <= data.col2.collider.top())){
+                           console.log(data.col2.name);
                             data.col1.acceleration.y = 0;
                            data.col1.velocity.y = 0;
-                            data.col1.state = "walk";
+                           if(data.col1.state == "fall"){
+                               data.col1.state = "walk";
+                           } 
                             data.col1.grounded = true;
                             data.col1.position.y = data.col2.collider.position.y - data.col1.height;
+
                        }
-                       else if ((data.col1.type !="ground")&&(data.col1.collider.bottom()-10 >= data.col2.collider.top())) {
+                       else  {
                           data.col1.velocity.x = -100;
+                            data.col1.position.x = data.col2.collider.position.x - 100;
+
                        }
                         
                    }
-               } else{
+               } else {
                    if(rangeIntersect(data.col1.position.x, data.col1.position.x+ data.col1.width, data.col2.position.x, data.col2.position.x + data.col2.width)){
                        if((data.col2.type !="ground")&&(data.col2.collider.bottom()-50 <= data.col1.collider.top())){
                         data.col2.acceleration.y = 0;
                            data.col1.velocity.y = 0;
-                        data.col1.state = "walk";
+                       // data.col2.state = "walk";
                         data.col2.grounded = true;
                           data.col2.position.y = data.col1.collider.position.y - data.col2.height;
                           console.log("collision");

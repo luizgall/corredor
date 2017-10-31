@@ -84,7 +84,6 @@ function Animator (obj){
         }
         if(this.finished){
             animation.reset();
-            return true;
         }
     }
 }
