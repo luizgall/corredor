@@ -48,6 +48,7 @@ var physics = (function(){
             for (var j=0; j<allGameObjects.length; j++){
                 if(allGameObjects[i]!== allGameObjects[j]){
                     if(collision(allGameObjects[i].collider, allGameObjects[j].collider)){
+                        console.log(allGameObjects[i].name, allGameObjects[j].name);
                         return true, resolveCollision({ "col1" : allGameObjects[i],
                                "col2" : allGameObjects[j]}) ;
                     }
@@ -62,11 +63,14 @@ var physics = (function(){
             return;
         }
         if ((data.col1.type == "player")|| (data.col2.type =="player")){
+            if(!data.col1.type == "player"){
+                aux = data.col2;
+                data.col2 = data.col1;
+                data.col1 = aux;
+            }
            if((data.col1.type == "ground")||(data.col2.type == "ground")){
-               if(data.col1.name == "player"){
                    if(rangeIntersect(data.col1.position.x, data.col1.position.x+ data.col1.width, data.col2.position.x, data.col2.position.x + data.col2.width)){
                        if((data.col1.type!= "ground")&&(data.col1.collider.bottom()-50  <= data.col2.collider.top())){
-                           console.log(data.col2.name);
                             data.col1.acceleration.y = 0;
                            data.col1.velocity.y = 0;
                            if(data.col1.state == "fall"){
@@ -76,29 +80,15 @@ var physics = (function(){
                             data.col1.position.y = data.col2.collider.position.y - data.col1.height;
 
                        }
-                       else  {
-                          data.col1.velocity.x = -100;
+                       else   if(rangeIntersect(data.col1.collider.position.y, data.col1.position.y+data.col1.collider.height, data.col2.collider.position.y, data.col2.position.y+data.col2.collider.height)){
+                           console.log("7777");
+                        data.col1.velocity.x = -100;
                             data.col1.position.x = data.col2.collider.position.x - 100;
 
-                       }
-                        
+                       } 
+                    
+                           
                    }
-               } else {
-                   if(rangeIntersect(data.col1.position.x, data.col1.position.x+ data.col1.width, data.col2.position.x, data.col2.position.x + data.col2.width)){
-                       if((data.col2.type !="ground")&&(data.col2.collider.bottom()-50 <= data.col1.collider.top())){
-                        data.col2.acceleration.y = 0;
-                           data.col1.velocity.y = 0;
-                       // data.col2.state = "walk";
-                        data.col2.grounded = true;
-                          data.col2.position.y = data.col1.collider.position.y - data.col2.height;
-                          console.log("collision");
-                       }
-                       else if ((data.col2.type !="ground")&&(data.col2.collider.bottom()-10 >= data.col1.collider.top())) {
-                            console.log("almostcollision");
-                           player.velocity.x = -100;
-                       }
-                   }
-               }
            }
         }
     };

@@ -30,8 +30,9 @@ function spawnPlatform(){
     obj.velocity = new Vector(-10,0);
     arr.push(obj);
     x = random (arr[arr.length-1].width - 200, arr[arr.length-1].position.x+gap);
-    y = arr[arr.length-1].position.y - 10;
-    taculos = new GameObject("obssssss", "ground", x, y, 50, -200, ""); 
+    y = arr[arr.length-1].position.y - 250;
+    var taculos;
+   taculos = new GameObject("obstaculo", "ground", x, y, 50, 200, ""); 
     taculos.collider = new Collider(taculos.position.x, taculos.position.y, taculos.width, taculos.height);
     taculos.velocity = new Vector(-10,0);
     taculos.grounded = true;
@@ -66,7 +67,7 @@ function levelUpdate(){
     }
         for(i=0;i<obs.length;i++){
         if(obs[i]){
-            obs[i].collider.update(obs[i].position.x, obs[i].position.y);
+            obs[i].collider.update(obs[i].position.x, obs[i].position.y-30);
                 ctx.beginPath();
                 ctx.fillStyle = "black";
                    ctx.fillRect(obs[i].collider.position.x, obs[i].collider.position.y , obs[i].width , obs[i].height);
