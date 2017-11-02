@@ -44,17 +44,14 @@ var physics = (function(){
         }
 
     this.checkCollision = function(){
-        for (var i=0; i<allGameObjects.length; i++){
-            for (var j=0; j<allGameObjects.length; j++){
-                if(allGameObjects[i]!== allGameObjects[j]){
-                    if(collision(allGameObjects[i].collider, allGameObjects[j].collider)){
-                        console.log(allGameObjects[i].name, allGameObjects[j].name);
-                        return true, resolveCollision({ "col1" : allGameObjects[i],
-                               "col2" : allGameObjects[j]}) ;
+        for (var i=1; i<allGameObjects.length; i++){
+                if(allGameObjects[i]!== player){
+                    if(collision(allGameObjects[i].collider, player.collider)){
+                         resolveCollision({ "col1" :player,
+                               "col2" : allGameObjects[i]}) ;
                     }
                 }     
              }         
-        }
     };
     function resolveCollision(data){
 
@@ -62,12 +59,6 @@ var physics = (function(){
             startJump = false;
             return;
         }
-        if ((data.col1.type == "player")|| (data.col2.type =="player")){
-            if(!data.col1.type == "player"){
-                aux = data.col2;
-                data.col2 = data.col1;
-                data.col1 = aux;
-            }
            if((data.col1.type == "ground")||(data.col2.type == "ground")){
                    if(rangeIntersect(data.col1.position.x, data.col1.position.x+ data.col1.width, data.col2.position.x, data.col2.position.x + data.col2.width)){
                        if((data.col1.type!= "ground")&&(data.col1.collider.bottom()-50  <= data.col2.collider.top())){
@@ -81,7 +72,7 @@ var physics = (function(){
 
                        }
                        else   if(rangeIntersect(data.col1.collider.position.y, data.col1.position.y+data.col1.collider.height, data.col2.collider.position.y, data.col2.position.y+data.col2.collider.height)){
-                           console.log("7777");
+                           console.log("7777", data.col1.name);
                         data.col1.velocity.x = -100;
                             data.col1.position.x = data.col2.collider.position.x - 100;
 
@@ -89,7 +80,6 @@ var physics = (function(){
                     
                            
                    }
-           }
         }
     };
     return{

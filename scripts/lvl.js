@@ -29,10 +29,10 @@ function spawnPlatform(){
     obj.collider = new Collider(obj.position.x, obj.position.y+200, obj.width, 2000);
     obj.velocity = new Vector(-10,0);
     arr.push(obj);
-    x = random (arr[arr.length-1].width - 200, arr[arr.length-1].position.x+gap);
+    x = random (arr[arr.length-1].width - 200, arr[arr.length-1].position.x);
     y = arr[arr.length-1].position.y - 250;
     var taculos;
-   taculos = new GameObject("obstaculo", "ground", x, y, 50, 200, ""); 
+    taculos = new GameObject("obstaculo", "ground", x, y, 50, 200, ""); 
     taculos.collider = new Collider(taculos.position.x, taculos.position.y, taculos.width, taculos.height);
     taculos.velocity = new Vector(-10,0);
     taculos.grounded = true;
