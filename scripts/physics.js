@@ -72,10 +72,14 @@ var physics = (function(){
 
                        }
                        else   if(rangeIntersect(data.col1.collider.position.y, data.col1.position.y+data.col1.collider.height, data.col2.collider.position.y, data.col2.position.y+data.col2.collider.height)){
-                           console.log("7777", data.col1.name);
-                        data.col1.velocity.x = -100;
-                            data.col1.position.x = data.col2.collider.position.x - 100;
+                           if((data.col1.collider.right() >= data.col2.collider.position.x) && (data.col1.collider.right() <= data.col2.collider.right())){
 
+                            data.col1.velocity.x = -50;
+                            data.col1.position.x = data.col2.collider.position.x - 100;
+                            data.col1.died = "true";
+
+                           } 
+  
                        } 
                     
                            

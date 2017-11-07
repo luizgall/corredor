@@ -13,7 +13,7 @@ function random(max, min){
 }
 function spawnPlatform(){
     score +=1;
-    width = random(500, 200);
+    width = random(1000, 200);
     lastY = arr[arr.length-1].position.y;
     gap = random (300, 100);
     if(lastY <= 400){
@@ -29,16 +29,17 @@ function spawnPlatform(){
     obj.collider = new Collider(obj.position.x, obj.position.y+200, obj.width, 2000);
     obj.velocity = new Vector(-10,0);
     arr.push(obj);
-    x = random (arr[arr.length-1].width - 200, arr[arr.length-1].position.x);
-    y = arr[arr.length-1].position.y - 250;
+    x = random (arr[arr.length-1].width - 200, arr[arr.length-1].position.x)+200;
+    y = arr[arr.length-1].position.y - 270;
     var taculos;
-    taculos = new GameObject("obstaculo", "ground", x, y, 50, 200, ""); 
-    taculos.collider = new Collider(taculos.position.x, taculos.position.y, taculos.width, taculos.height);
-    taculos.velocity = new Vector(-10,0);
-    taculos.grounded = true;
-    obs.push(taculos);
+    if(arr[arr.length-1].width >= 400){
+        taculos = new GameObject("obstaculo", "ground", x, y, 50, 200, ""); 
+        taculos.collider = new Collider(taculos.position.x, taculos.position.y, taculos.width, taculos.height);
+        taculos.velocity = new Vector(-10,0);
+        taculos.grounded = true;
+        obs.push(taculos);
+    }
 }
-score = 0;
 arr = [];
 obs = [];
 

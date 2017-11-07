@@ -58,6 +58,9 @@ function startGame(){
 }
 
 function update(){
+    if(!player.died){
+        score += 0.3;
+    }
 
     requestAnimFrame(update)
     if(physics.checkCollision()){
@@ -68,7 +71,16 @@ function update(){
     plat.draw();
     levelUpdate();
     plat.collider.update(plat.position.x, plat.position.y);
-    player.collider.update(player.position.x+50, player.position.y+50);
+    if(player.state == "roll"){
+        player.collider.height = 95;
+        player.collider.update(player.position.x+50, player.position.y+100);
+        
+    }else{
+        player.collider.height = player.height-50;
+        
+        player.collider.update(player.position.x+50, player.position.y+50);
+        
+    }
     player.animator.play();
     if((player.animator.finished) && (player.state=="jump")){
         player.state = "fall";
@@ -80,5 +92,6 @@ function update(){
     if(player.position.y > 1000){
         player.died = true;
     }
+    drawGUI();
 
 }
