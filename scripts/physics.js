@@ -1,6 +1,9 @@
  function rangeIntersect(min0, max0, min1,max1){
     return Math.max(min0,max0)>= Math.min(min1,max1) && Math.min(min0,max0)<=Math.max(min1,max1);
 }
+function random(max, min){
+    return Math.floor((Math.random()*max)+min);
+}
 
     function collision(r0,r1){
             if((r0 == undefined)|| (r1 == undefined)){
@@ -14,19 +17,20 @@ var physics = (function(){
 
     var gravity = new Vector(0,5);
     this.update = function(){
+        physics,checkCollision();
         if((player.position.x > 150)&&(player.grounded)){
             player.acceleration.x =0;
             player.velocity.x = 0;
             player.position.x-=5;
         }
         
-    for (var i=0; i<allGameObjects.length; i++){
-        if(!allGameObjects[i].grounded){
-            allGameObjects[i].acceleration =  allGameObjects[i].acceleration.add(gravity);
-            allGameObjects[i].velocity = allGameObjects[i].velocity.add(allGameObjects[i].acceleration).multiply(allGameObjects[i].speed); 
+    for (var i=0; i<level.allGameObjects.length; i++){
+        if(!level.allGameObjects[i].grounded){
+            level.allGameObjects[i].acceleration =  level.allGameObjects[i].acceleration.add(gravity);
+            level.allGameObjects[i].velocity = level.allGameObjects[i].velocity.add(level.allGameObjects[i].acceleration).multiply(level.allGameObjects[i].speed); 
 
         }
-        allGameObjects[i].position = allGameObjects[i].position.add(allGameObjects[i].velocity);
+        level.allGameObjects[i].position = level.allGameObjects[i].position.add(level.allGameObjects[i].velocity);
 
         }
         player.grounded= false;
@@ -44,11 +48,11 @@ var physics = (function(){
         }
 
     this.checkCollision = function(){
-        for (var i=1; i<allGameObjects.length; i++){
-                if(allGameObjects[i]!== player){
-                    if(collision(allGameObjects[i].collider, player.collider)){
+        for (var i=1; i<level.allGameObjects.length; i++){
+                if(level.allGameObjects[i]!== player){
+                    if(collision(level.allGameObjects[i].collider, player.collider)){
                          resolveCollision({ "col1" :player,
-                               "col2" : allGameObjects[i]}) ;
+                               "col2" : level.allGameObjects[i]}) ;
                     }
                 }     
              }         

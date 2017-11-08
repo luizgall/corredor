@@ -43,7 +43,7 @@ function ground(){
         ctx.fillStyle = "black";
         ctx.fillRect(plat.position.x,plat.position.y,plat.width,plat.height);
     }
-    plat.velocity = new Vector(-10,0);
+    plat.velocity = level.difficults[level.lv].speed;
     arr.push(plat);
 }
 
@@ -52,24 +52,18 @@ function startGame(){
     initPlayer();
     ground();
     background.reset();
-    spawnPlatform();
+    level.spawnPlatform();
     update();
     
 }
 
 function update(){
-    if(!player.died){
-        score += 0.3;
-    }
 
     requestAnimFrame(update)
-    if(physics.checkCollision()){
-        console.log("collision");
-    }
     physics.update();
     background.draw();
     plat.draw();
-    levelUpdate();
+ 
     plat.collider.update(plat.position.x, plat.position.y);
     if(player.state == "roll"){
         player.collider.height = 95;
@@ -92,6 +86,7 @@ function update(){
     if(player.position.y > 1000){
         player.died = true;
     }
-    drawGUI();
+    level.update();
+
 
 }

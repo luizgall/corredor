@@ -29,5 +29,5 @@ function GameObject(name, type, x,y, width, height, sheet){
     }
     this.state = "disabled";
     this.animations ={};
-    allGameObjects.push(this);
+    level.allGameObjects.push(this);
 }
