@@ -10,28 +10,18 @@ $(document).ready(function(){
                 player.grounded= false;
                 player.state = "jump";
                 player.animator.state = "jump";
-                if(upDown){
-                                    player.acceleration.y -=90;
-                                                        player.velocity.x = 200;
-
-                }
-                else{
-                                    player.acceleration.y -=80;
-                                    player.acceleration.x = 5;
-                }
-
-
+                player.acceleration.y -=80;
+                player.acceleration.x = 5;
             }
            
-        if(((e.keyCode == "40") || (e.keyCode=="40"))){
+        if((e.keyCode == "40") && (player.state == "walk")){
             console.log("roll");
             player.state = "roll";
             player.animator.state ="roll";
         }
-          if(((e.keyCode == "40")) &&(player.state == "fall")){  
-              console.log("oi");
+          if(((e.keyCode == "40")) &&(player.state == "fall")){ 
           
-          player.velocity.y+= 100;
+          player.velocity.y+= 300;
           
           }
        });

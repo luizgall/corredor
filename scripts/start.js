@@ -48,13 +48,7 @@ function ground(){
 }
 
 function startGame(){
-    console.log("game started");
-    initPlayer();
-    ground();
-    background.reset();
-    level.spawnPlatform();
-    update();
-    
+    level.start(); 
 }
 
 function update(){

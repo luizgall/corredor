@@ -1,18 +1,19 @@
 
 var level = {
+    "state":"intro",
     "lv": 0,
     "difficults" : [
     {"obsN": 0,
     "speed": new Vector(-10,0),
     "maxWidth": 1000,
-    "minWidth": 1000, 
+    "minWidth": 800, 
     "deltaHeight":50,
     "minGap":50,
     "maxGap":100,
     },
     {"obsN": 0,
     "speed": new Vector(-12,0),
-    "maxWidth": 1000,
+    "maxWidth": 800,
     "minWidth": 500, 
     "deltaHeight":100,
     "minGap":100,
@@ -21,9 +22,9 @@ var level = {
     {"obsN": 0,
     "speed": new Vector(-14,0),
     "maxWidth": 800,
-    "minWidth": 300, 
+    "minWidth": 200, 
     "deltaHeight":200,
-    "minGap":50,
+    "minGap":150,
     "maxGap":200,
     },
     ], 
@@ -50,11 +51,11 @@ var level = {
         obj.collider = new Collider(obj.position.x, obj.position.y+200, obj.width, 2000);
         obj.velocity = level.difficults[level.lv].speed;
         arr.push(obj);
-        x = random (arr[arr.length-1].width - 200, arr[arr.length-1].position.x)+200;
-        y = arr[arr.length-1].position.y - 270;
+        x = random (arr[arr.length-1].width - 100, arr[arr.length-1].position.x)+100;
+        y = arr[arr.length-1].position.y - 240;
         var taculos;
         if(arr[arr.length-1].width >= 400){
-            taculos = new GameObject("obstaculo", "ground", x, y, 50, 200, ""); 
+            taculos = new GameObject("obstaculo", "ground", x, y, 50, 150, ""); 
             taculos.collider = new Collider(taculos.position.x, taculos.position.y, taculos.width, taculos.height);
             taculos.velocity = level.difficults[level.lv].speed;
             taculos.grounded = true;
@@ -147,9 +148,29 @@ var level = {
                 level.allGameObjects[i].velocity = level.difficults[level.lv].speed;
             }
         }
+    },
+    "start": function(){
+        scenes.intro.start();
     }
 }
 var length = 700;
 var lastGap = 250;
 arr = [];
 obs = [];
+
+var scenes = {
+  "intro": {
+      "start":function(){
+         title = new Text("atrasado", "black", "60px Georgia", new Vector(280, 250));
+          title.write();
+      }
+  },
+    "startLevel": function(){
+    console.log("game started");
+    initPlayer();
+    ground();
+    background.reset();
+    level.spawnPlatform();
+    update();
+    }
+}

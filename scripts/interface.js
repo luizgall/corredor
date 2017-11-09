@@ -18,14 +18,15 @@ function drawGUI(){
 function Text(text, textColor, fontSize, position){
     this.text = text;
     this.color = textColor;
-    this.size = fontSize; 
+    this.font = fontSize; 
     this.position = position; 
     this.update = function(text){
         this.text =  text; 
     }
     this.write = function(){
         ctx.fillStyle = this.color;
-        ctx.fillText(this.text, )
+        ctx.font = this.font;
+        ctx.fillText(this.text,this.position.x, this.position.y);
 
     }
 }
