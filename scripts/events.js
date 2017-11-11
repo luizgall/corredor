@@ -5,8 +5,6 @@ var el = document.getElementsByTagName("canvas")[0];
 el.addEventListener("touchstart", startTouch);
 el.addEventListener("touchmove", touchMove);
 el.addEventListener("touchend", touchEnd);
-el.addEventListener("touchcancel", touchHandlerrr);
-
 function startTouch(e){
       var touchobj = e.changedTouches[0] // reference first touch point (ie: first finger)
         starty = parseInt(touchobj.clientY) // get x position of touch point relative to left edge of browser        e.preventDefault()
@@ -31,6 +29,7 @@ $(document).ready(function(){
     // jump = 250;
        $(document).on('keydown', function(e){
             if(e.keyCode == "32"){
+                console.log("jump");
             jump();
             }
            
@@ -50,7 +49,7 @@ $(document).ready(function(){
 
 function jump(){
       if(((player.state == "walk")||(player.state == "roll"))){
-                console.log("jump");
+        // document.getElementsByTagName("body")[0].webkitRequestFullScreen();
                 startJump = true;
                 player.grounded= false;
                 player.state = "jump";

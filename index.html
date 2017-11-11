@@ -1,15 +1,40 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="manifest" href="manifest.json">
         <style>
+            
             body{
                 background-color: #474747;
             }
             canvas {
-                margin-left: 5%;
-                width: 90%;
+                margin-left: 10%;
+                width: 50%;
+                min-width: 800px;
                 height: 530px;
             }
+@media only screen and (min-device-width: 300px) and (max-device-width: 1024px) and (orientation:portrait) {
+  body{
+    -webkit-transform: rotate(90deg);
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+    canvas{
+    overflow: hidden;
+    position: absolute;
+    top: 5%;
+    left: 0;
+                margin-left: 1vw;
+
+        height: 70%;
+        width: 90%;
+           min-width: 1800px;
+    }
+}
         </style>
         <meta charset="utf-8">
     </head>

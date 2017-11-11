@@ -8,9 +8,8 @@ var requestAnimFrame = (function(){
            window.setTimeout(callback, 1000 / 60);
          };
 })();
-
+screen.orientation.lock("landscape");   screen.lockOrientation("landscape");
 var player;
-
 
 function initPlayer(){
     player = new GameObject("player", "player",150, 150, 150, 192, "img/spritesheet.png");
