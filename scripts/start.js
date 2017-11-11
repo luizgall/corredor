@@ -36,7 +36,7 @@ function initPlayer(){
     
 }
 function ground(){
-    plat = new GameObject("ground", "ground", 0, 350 , 1000, 300, " ");
+    plat = new GameObject("ground", "ground", 0, 450 , 1000, 300, " ");
     plat.grounded = true;
     plat.collider = new Collider(plat.position.x, plat.position.y, plat.width, plat.height);
     plat.draw = function(){

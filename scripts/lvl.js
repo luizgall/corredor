@@ -150,7 +150,7 @@ var level = {
         }
     },
     "start": function(){
-        scenes.intro.start();
+        scenes.startLevel();
     }
 }
 var length = 700;
