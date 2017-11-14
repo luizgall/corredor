@@ -150,7 +150,7 @@ var level = {
         }
     },
     "start": function(){
-        scenes.startLevel();
+        scenes.intro.start();
     }
 }
 var length = 700;
@@ -161,7 +161,13 @@ obs = [];
 var scenes = {
   "intro": {
       "start":function(){
+          background.reset();
          title = new Text("atrasado", "black", "60px Georgia", new Vector(280, 250));
+          title.write();
+          scenes.intro.update();
+      },
+      "update":function(){
+          background.draw();
           title.write();
       }
   },
