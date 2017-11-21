@@ -80,8 +80,9 @@ var physics = (function(){
 
                             data.col1.velocity.x = -50;
                             data.col1.position.x = data.col2.collider.position.x - 100;
-                            data.col1.died = "true";
-
+                            if(player.position.x <= 150){
+                                player.died = true;
+                            }
                            } 
   
                        } 

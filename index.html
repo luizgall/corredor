@@ -1,40 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="manifest" href="manifest.json">
         <style>
             
             body{
                 background-color: #474747;
+                max-height: 600px;
             }
  
-@media only screen and (min-device-width: 300px) and (max-device-width: 1024px) and (orientation:portrait) {
-  body{
-    -webkit-transform: rotate(90deg);
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-    canvas{
-    overflow: hidden;
-    position: absolute;
-    top: 5%;
-    left: 0;
-                margin-left: 1vw;
-
-        height: 70%;
-        width: 90%;
-           min-width: 1800px;
-    }
-}
         </style>
         <meta charset="utf-8">
     </head>
     <body>
-        <canvas id="canvas" width="800" height="700"> HTML5 Canvas not supported.</canvas>
+        <canvas id="canvas" width="800" height="500"> HTML5 Canvas not supported.</canvas>
         <script src="scripts/jquery.js"></script>
         <script src="scripts/assetLoader.js"></script>
         <script src="scripts/vector.js"></script>

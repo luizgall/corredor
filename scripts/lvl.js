@@ -143,42 +143,54 @@ var scenes = {
   "intro": {
       "start":function(){
           background.reset();
-          a = new Text("atrasado", "white", "60px Georgia", new Vector(280, 250));
-          b = new Text("começar", "white", "40px Georgia", new Vector(320, 450));
-          c = new Text("instruções", "white", "40px Georgia", new Vector(300, 550));
-            title = new Button(a, new Vector(280, 250), 300, 50);
-            start = new Button(b, new Vector(280, 450), 300, 50);
-            instru = new Button(c, new Vector(280, 550), 300, 50);
+          a = new Text("atrasado", "white", "60px Georgia", new Vector(280, 150));
+          b = new Text("começar", "white", "40px Georgia", new Vector(320, 300));
+          c = new Text("instruções", "white", "40px Georgia", new Vector(300, 400));
+          instruTitle = new Text("controles:", "white", "40px Georgia", new Vector(320, 150));
+          instruL1 = new Text("Espaço : pular", "white", "30px Georgia", new Vector(220, 250));
+          instruL2 = new Text("Seta para baixo : cambalhota", "white", "30px Georgia", new Vector(220, 350));
+          instruJogar = new Text("começar", "white", "60px Georgia", new Vector(300, 450));
+            title = new Button(a, new Vector(280, 150), 300, 50);
+            start = new Button(b, new Vector(280, 300), 300, 50);
+            instru = new Button(c, new Vector(280, 400), 300, 50);
+            jogar = new Button(instruJogar, instruJogar.position, 300, 50);
             
           title.write();
           scenes.intro.update();
       },
       "update":function(){
-        requestAnimFrame(scenes.intro.update);
           background.draw();
+          if(instru.clicked){
+              instru.clicked = false; 
+                scenes.intro.instru();
+        } else{
+            requestAnimFrame(scenes.intro.update);            
           title.write();
           start.write();
           instru.write();
           if (start.clicked){
               start.clicked = false;
-              for(i = 0; i < buttons.length; i++){
-                buttons.splice(i, 1);
-            }
-            buttons = [];
               scenes.level1.start();
 
           }
-          if(instru.clicked){
-              instru.clicked = false; 
-            alert("ain");
-            for(i = 0; i < buttons.length; i++){
-                buttons.splice(i, 1);
-            }
-
-          }
+        }
       },
       "instru":function(){
-          requestAnimFrame(scenes.intro.instru);
+          background.draw();
+        ctx.fillStyle="black";
+        ctx.fillRect(100, 100, 600, 300);
+        instruTitle.write();
+        instruL1.write();
+        instruL2.write();
+        instruJogar.write();
+        jogar.write();
+        if(jogar.clicked){
+            jogar.clicked = false;
+            
+            scenes.level1.start();
+        } else{
+            requestAnimFrame(scenes.intro.instru);            
+        }
         
         }
   },
@@ -190,6 +202,7 @@ var scenes = {
             arr = [];
             obs = [];
             taculos = [];
+            abc = 0;
         initPlayer();
         ground();
         background.reset();
@@ -199,6 +212,10 @@ var scenes = {
         },
         "update": function(){
             if(player.died){
+                abc += 1;
+                console.log(abc);
+            }
+            if((player.died)&&abc>50){
                         scenes.gameOver.start();
             }else{
             requestAnimFrame(scenes.level1.update);}
@@ -254,21 +271,24 @@ var scenes = {
   },
   "gameOver":{
       "start": function(){
-      background.reset();
-      a = new Text("Fim do jogo", "white", "60px Georgia", new Vector(280, 250));
-      b = new Text("jogar novamente", "white", "40px Georgia", new Vector(320, 450));
-        title = new Button(a, new Vector(280, 250), 400, 50);
-    nov = new Button(b, new Vector(280, 450), 500, 50);
+      a = new Text("Fim do jogo", "white", "60px Georgia", new Vector(280, 150));
+      b = new Text("jogar novamente", "white", "40px Georgia", new Vector(290, 450));
+        title = new Button(a, new Vector(280, 150), 400, 50);
+    nov = new Button(b, new Vector(210, 450), 500, 50);
       title.write();
       nov.write();
-      allGameObjects = [];
       scenes.gameOver.update();
   },
   "update": function(){
+    physics.update();    
     background.draw(); 
+    level.updateVelocity();    
+    level.updateColliders();
+    
     title.write();
     nov.write();   
     if(nov.clicked){
+        nov.clicked = false;
         window.location.reload(false); 
         
     }else{
@@ -278,3 +298,6 @@ var scenes = {
 
 }
 }
+
+
+abc = 0;

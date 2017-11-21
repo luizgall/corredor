@@ -2,7 +2,7 @@
 var startJump;
 var buttons = [];
 var upDown;
-var el = document.getElementsByTagName("canvas")[0];
+var el = document;
 el.addEventListener("touchstart", startTouch);
 el.addEventListener("touchmove", touchMove);
 el.addEventListener("touchend", touchEnd);
@@ -20,13 +20,21 @@ function clickHandler(e){
    
 }
 function startTouch(e){
-      var touchobj = e.changedTouches[0] // reference first touch point (ie: first finger)
-        starty = parseInt(touchobj.clientY) // get x position of touch point relative to left edge of browser        e.preventDefault()
+      var touchobj = e.changedTouches[0] 
+        mouseY = parseInt(touchobj.clientY)
+        mouseX = parseInt(touchobj.clientX)
+        for(i=0; i<buttons.length; i++){
+            text = buttons[i];        
+            if((mouseX>=text.position.x-35)&&(mouseX<=text.position.x+text.width)&&(mouseY>=text.position.y-50)&&(mouseY<=text.position.y+text.height+30)){
+                text.clicked = true;
+            }
+        }
+
 }
 function touchMove(e) {
     if(e.touches) {
-       var touchobj = e.changedTouches[0] // reference first touch point for this event
-     dist = parseInt(touchobj.clientY) - starty
+       var touchobj = e.changedTouches[0]
+     dist = parseInt(touchobj.clientY) - mouseY
         e.preventDefault()
     }
 }
