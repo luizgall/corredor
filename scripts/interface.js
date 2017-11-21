@@ -20,13 +20,31 @@ function Text(text, textColor, fontSize, position){
     this.color = textColor;
     this.font = fontSize; 
     this.position = position; 
+    this.width = 300;
+    this.height = 50;
     this.update = function(text){
         this.text =  text; 
     }
-    this.write = function(){
+    this.write = function(dad){
         ctx.fillStyle = this.color;
         ctx.font = this.font;
         ctx.fillText(this.text,this.position.x, this.position.y);
 
+    }
+}
+
+function Button(text, position, width, height){
+    this.position = text.position;
+    this.clicked = false; 
+    this.width = width;
+    this.height = height;
+    this.text = text;
+    this.click = function(){};
+    this.position = position;
+    buttons.push(this);
+    this.write = function(){
+        ctx.fillStyle = "black";
+        ctx.fillRect(this.position.x-35, this.position.y-50, this.width, this.height+30);
+        this.text.write();
     }
 }

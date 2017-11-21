@@ -8,7 +8,6 @@ var requestAnimFrame = (function(){
            window.setTimeout(callback, 1000 / 60);
          };
 })();
-screen.orientation.lock("landscape");   screen.lockOrientation("landscape");
 var player;
 
 function initPlayer(){
@@ -44,42 +43,4 @@ function ground(){
     }
     plat.velocity = level.difficults[level.lv].speed;
     arr.push(plat);
-}
-
-function startGame(){
-    level.start(); 
-}
-
-function update(){
-
-    requestAnimFrame(update)
-    physics.update();
-    background.draw();
-    plat.draw();
- 
-    plat.collider.update(plat.position.x, plat.position.y);
-    if(player.state == "roll"){
-        player.collider.height = 95;
-        player.collider.update(player.position.x+50, player.position.y+100);
-        
-    }else{
-        player.collider.height = player.height-50;
-        
-        player.collider.update(player.position.x+50, player.position.y+50);
-        
-    }
-    player.animator.play();
-    if((player.animator.finished) && (player.state=="jump")){
-        player.state = "fall";
-        startJump = false;
-    }
-        if((player.animator.finished) && (player.state=="roll")){
-        player.state = "walk";
-    }
-    if(player.position.y > 1000){
-        player.died = true;
-    }
-    level.update();
-
-
 }

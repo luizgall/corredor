@@ -121,26 +121,7 @@ var level = {
         }
     },
     "update":function(){
-        if(!player.died){
-            score += 0.3;
-        }    
-        if((score>=150) && (score < 300)){
-            level.lv =1;
-            level.updateVelocity();
-        }
-        if((score>=300) && (score < 500)){
-            level.lv =2;
-            level.updateVelocity();
-        }
-        if((score>=550) && (score < 900)){
-            level.lv =3;
-            level.updateVelocity();
-        }
-        if((arr[arr.length-1].position.x <=800)&&(!player.died)){
-            level.spawnPlatform();
-        }
-        level.updateColliders();
-        drawGUI();
+
     },
     "updateVelocity":function(){
         for(i=0; i < level.allGameObjects.length; i++){
@@ -162,21 +143,138 @@ var scenes = {
   "intro": {
       "start":function(){
           background.reset();
-         title = new Text("atrasado", "black", "60px Georgia", new Vector(280, 250));
+          a = new Text("atrasado", "white", "60px Georgia", new Vector(280, 250));
+          b = new Text("começar", "white", "40px Georgia", new Vector(320, 450));
+          c = new Text("instruções", "white", "40px Georgia", new Vector(300, 550));
+            title = new Button(a, new Vector(280, 250), 300, 50);
+            start = new Button(b, new Vector(280, 450), 300, 50);
+            instru = new Button(c, new Vector(280, 550), 300, 50);
+            
           title.write();
           scenes.intro.update();
       },
       "update":function(){
+        requestAnimFrame(scenes.intro.update);
           background.draw();
           title.write();
-      }
+          start.write();
+          instru.write();
+          if (start.clicked){
+              start.clicked = false;
+              for(i = 0; i < buttons.length; i++){
+                buttons.splice(i, 1);
+            }
+            buttons = [];
+              scenes.level1.start();
+
+          }
+          if(instru.clicked){
+              instru.clicked = false; 
+            alert("ain");
+            for(i = 0; i < buttons.length; i++){
+                buttons.splice(i, 1);
+            }
+
+          }
+      },
+      "instru":function(){
+          requestAnimFrame(scenes.intro.instru);
+        
+        }
   },
-    "startLevel": function(){
-    console.log("game started");
-    initPlayer();
-    ground();
-    background.reset();
-    level.spawnPlatform();
-    update();
-    }
+  "level1":{
+         "start": function(){
+            score = 0;
+            level.lv = 0;
+            buttons = [];
+            arr = [];
+            obs = [];
+            taculos = [];
+        initPlayer();
+        ground();
+        background.reset();
+        level.spawnPlatform();
+         scenes.level1.update();
+
+        },
+        "update": function(){
+            if(player.died){
+                        scenes.gameOver.start();
+            }else{
+            requestAnimFrame(scenes.level1.update);}
+            physics.update();
+            background.draw();
+            plat.draw();
+            plat.collider.update(plat.position.x, plat.position.y);
+            if(player.state == "roll"){
+                player.collider.height = 95;
+                player.collider.update(player.position.x+50, player.position.y+100);
+                
+            }else{
+                player.collider.height = player.height-50;
+                
+                player.collider.update(player.position.x+50, player.position.y+50);
+                
+            }
+            player.animator.play();
+            if((player.animator.finished) && (player.state=="jump")){
+                player.state = "fall";
+                startJump = false;
+            }
+                if((player.animator.finished) && (player.state=="roll")){
+                player.state = "walk";
+            }
+            if(player.position.y > 1000){
+                player.died = true;
+            }
+            if(!player.died){
+                score += 0.3;
+            }    
+            if((score>=150) && (score < 300)){
+                level.lv =1;
+                level.updateVelocity();
+            }
+            if((score>=300) && (score < 500)){
+                level.lv =2;
+                level.updateVelocity();
+            }
+            if((score>=550) && (score < 900)){
+                level.lv =3;
+                level.updateVelocity();
+            }
+            if((arr[arr.length-1].position.x <=800)&&(!player.died)){
+                level.spawnPlatform();
+            }
+
+
+            level.updateColliders();
+            drawGUI();
+
+        }
+  },
+  "gameOver":{
+      "start": function(){
+      background.reset();
+      a = new Text("Fim do jogo", "white", "60px Georgia", new Vector(280, 250));
+      b = new Text("jogar novamente", "white", "40px Georgia", new Vector(320, 450));
+        title = new Button(a, new Vector(280, 250), 400, 50);
+    nov = new Button(b, new Vector(280, 450), 500, 50);
+      title.write();
+      nov.write();
+      allGameObjects = [];
+      scenes.gameOver.update();
+  },
+  "update": function(){
+    background.draw(); 
+    title.write();
+    nov.write();   
+    if(nov.clicked){
+        window.location.reload(false); 
+        
+    }else{
+    requestAnimationFrame(scenes.gameOver.update);}
+    
+  }
+
+}
 }

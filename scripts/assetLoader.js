@@ -17,7 +17,7 @@ var assets = (function(){
     function loaded (){
         assetsDownloaded++;
         if(assetsDownloaded === imgsN){
-            startGame();
+            scenes.intro.start();
         }
         
     }
@@ -39,7 +39,7 @@ var assets = (function(){
         
     }
     this.finished = function(){
-        startGame();
+        scenes.intro.start();
     }
     return{
         imgs: this.imgs,

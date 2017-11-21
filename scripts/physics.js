@@ -92,7 +92,8 @@ var physics = (function(){
     };
     return{
         update:this.update,
-        checkCollision:this.checkCollision
+        checkCollision:this.checkCollision,
+        collision:this.collision
     };
 })();
 
