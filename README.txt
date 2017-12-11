@@ -1,0 +1,3 @@
+Atrasado foi um projeto desenvolvido para um disciplina da faculdade. Ele é um protótipo para um jogo endless runner com controles básicos (espaço pula, baixo cambalhota). O intuito do projeto foi desenvolver um motor para o jogo que utilizasse os controles, calculasse a física e manejasse todos os objetos do jogo.
+
+Para visualizar o protótipo em ação, acesse o site: http://llag.com.br/atrasado/index.html
